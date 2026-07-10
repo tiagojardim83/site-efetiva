@@ -18,19 +18,37 @@ mainNav.querySelectorAll('a').forEach(link => {
   });
 });
 
-// Crossfade genérico: alterna a classe "active" entre slides irmãos
-function startCrossfade(slides, interval) {
+// Crossfade genérico: alterna a classe "active" entre slides irmãos, com troca automática e setas opcionais
+function startCrossfade(slides, interval, arrows) {
   if (slides.length < 2) return;
   let index = 0;
-  setInterval(() => {
+  let timer;
+
+  function goTo(i) {
     slides[index].classList.remove('active');
-    index = (index + 1) % slides.length;
+    index = (i + slides.length) % slides.length;
     slides[index].classList.add('active');
-  }, interval);
+  }
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
+  function restart() {
+    clearInterval(timer);
+    timer = setInterval(next, interval);
+  }
+
+  if (arrows) {
+    if (arrows.prev) arrows.prev.addEventListener('click', () => { prev(); restart(); });
+    if (arrows.next) arrows.next.addEventListener('click', () => { next(); restart(); });
+  }
+
+  restart();
 }
 
-// Hero: transição suave (crossfade) entre as fotos de fundo
-startCrossfade(document.querySelectorAll('.hero-slide'), 5000);
+// Hero: transição suave (crossfade) entre as fotos de fundo, com setas
+startCrossfade(document.querySelectorAll('.hero-slide'), 5000, {
+  prev: document.querySelector('.hero-arrow.prev'),
+  next: document.querySelector('.hero-arrow.next'),
+});
 
 // "O que fazemos": carrossel elegante entre as fotos do ambiente
 startCrossfade(document.querySelectorAll('.about-slide'), 4500);
