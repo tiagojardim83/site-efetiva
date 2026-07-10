@@ -106,6 +106,83 @@ if (specialtiesList) {
   }
 }
 
+// Carrossel dos cards de projeto: setas, arraste e troca automática
+function initProjectCarousel(root) {
+  const track = root.querySelector('.carousel-track');
+  const slides = root.querySelectorAll('.carousel-slide');
+  const dots = root.querySelectorAll('.carousel-dots .dot');
+  const prevBtn = root.querySelector('.carousel-arrow.prev');
+  const nextBtn = root.querySelector('.carousel-arrow.next');
+  if (!track || slides.length < 2) return;
+
+  let index = 0;
+  let autoplayTimer;
+
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((d, di) => d.classList.toggle('active', di === index));
+  }
+
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
+
+  function startAutoplay() {
+    clearInterval(autoplayTimer);
+    autoplayTimer = setInterval(next, 4000);
+  }
+
+  prevBtn.addEventListener('click', () => { prev(); startAutoplay(); });
+  nextBtn.addEventListener('click', () => { next(); startAutoplay(); });
+  dots.forEach((dot, di) => dot.addEventListener('click', () => { goTo(di); startAutoplay(); }));
+
+  let dragging = false;
+  let startX = 0;
+  let currentX = 0;
+
+  function pointerX(e) { return e.touches ? e.touches[0].clientX : e.clientX; }
+
+  function onDragStart(e) {
+    dragging = true;
+    startX = pointerX(e);
+    currentX = startX;
+    track.classList.add('dragging');
+    clearInterval(autoplayTimer);
+  }
+
+  function onDragMove(e) {
+    if (!dragging) return;
+    currentX = pointerX(e);
+    const deltaPercent = ((currentX - startX) / root.offsetWidth) * 100;
+    track.style.transform = `translateX(calc(-${index * 100}% + ${deltaPercent}%))`;
+  }
+
+  function onDragEnd() {
+    if (!dragging) return;
+    dragging = false;
+    track.classList.remove('dragging');
+    const delta = currentX - startX;
+    if (Math.abs(delta) > root.offsetWidth * 0.15) {
+      delta < 0 ? next() : prev();
+    } else {
+      goTo(index);
+    }
+    startAutoplay();
+  }
+
+  root.addEventListener('mousedown', onDragStart);
+  window.addEventListener('mousemove', onDragMove);
+  window.addEventListener('mouseup', onDragEnd);
+  root.addEventListener('touchstart', onDragStart, { passive: true });
+  root.addEventListener('touchmove', onDragMove, { passive: true });
+  root.addEventListener('touchend', onDragEnd);
+
+  goTo(0);
+  startAutoplay();
+}
+
+document.querySelectorAll('.project-carousel:not(.project-carousel-placeholder)').forEach(initProjectCarousel);
+
 // Últimos projetos (mobile): fotos entram pela lateral ao rolar, e voltam ao sair da tela
 const projectFigures = document.querySelectorAll('.projects-grid figure');
 if (projectFigures.length && 'IntersectionObserver' in window) {
