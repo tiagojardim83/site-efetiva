@@ -155,10 +155,19 @@ em { font-style: italic; }
 .hero-media {
   position: absolute;
   inset: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
   transform: scale(1.02);
+  opacity: 0;
+  transition: opacity 2s ease;
 }
+
+.hero-slide.active { opacity: 1; }
 
 .hero-overlay {
   position: absolute;
@@ -526,6 +535,14 @@ em { font-style: italic; }
   .nav-contact-mobile { display: block; }
 
   .form-row { grid-template-columns: 1fr; gap: 0; }
+
+  .projects-grid figure {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .projects-grid figure:nth-child(odd) { transform: translateX(-60px); }
+  .projects-grid figure:nth-child(even) { transform: translateX(60px); }
+  .projects-grid figure.in-view { opacity: 1; transform: translateX(0); }
 }
 
 @media (max-width: 480px) {

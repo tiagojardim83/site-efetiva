@@ -18,6 +18,17 @@ mainNav.querySelectorAll('a').forEach(link => {
   });
 });
 
+// Hero: transição suave (crossfade) entre as fotos de fundo
+const heroSlides = document.querySelectorAll('.hero-slide');
+if (heroSlides.length > 1) {
+  let heroSlideIndex = 0;
+  setInterval(() => {
+    heroSlides[heroSlideIndex].classList.remove('active');
+    heroSlideIndex = (heroSlideIndex + 1) % heroSlides.length;
+    heroSlides[heroSlideIndex].classList.add('active');
+  }, 5000);
+}
+
 // Tilt 3D: título do hero e citação da Nossa Visão inclinam acompanhando o mouse
 function attachTilt(el, { max = 10, perspective = 700 } = {}) {
   if (!el) return;
@@ -87,6 +98,17 @@ if (specialtiesList) {
   } else {
     specialtiesList.classList.add('in-view');
   }
+}
+
+// Últimos projetos (mobile): fotos entram pela lateral ao rolar, e voltam ao sair da tela
+const projectFigures = document.querySelectorAll('.projects-grid figure');
+if (projectFigures.length && 'IntersectionObserver' in window) {
+  const projectsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('in-view', entry.isIntersecting);
+    });
+  }, { threshold: 0.2 });
+  projectFigures.forEach(fig => projectsObserver.observe(fig));
 }
 
 // Envio do formulário de contato (via Formspree, sem sair da página)
