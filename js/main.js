@@ -89,16 +89,37 @@ if (specialtiesList) {
   }
 }
 
-// Envio do formulário de contato
+// Envio do formulário de contato (via Formspree, sem sair da página)
 const form = document.getElementById('contactForm');
 const status = document.getElementById('formStatus');
+const submitBtn = form.querySelector('.btn-submit');
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (!form.checkValidity()) {
     status.textContent = 'Preencha os campos obrigatórios.';
     return;
   }
-  status.textContent = 'Mensagem enviada! Em breve entraremos em contato.';
-  form.reset();
+
+  submitBtn.disabled = true;
+  status.textContent = 'Enviando...';
+
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' },
+    });
+
+    if (response.ok) {
+      status.textContent = 'Mensagem enviada! Em breve entraremos em contato.';
+      form.reset();
+    } else {
+      status.textContent = 'Não foi possível enviar. Tente novamente ou fale pelo WhatsApp.';
+    }
+  } catch (err) {
+    status.textContent = 'Não foi possível enviar. Tente novamente ou fale pelo WhatsApp.';
+  } finally {
+    submitBtn.disabled = false;
+  }
 });
