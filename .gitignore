@@ -1,3 +1,5 @@
 .DS_Store
 Arquivos do site/
 screencapture-*.png
+.vercel
+.env*
