@@ -18,16 +18,22 @@ mainNav.querySelectorAll('a').forEach(link => {
   });
 });
 
-// Hero: transição suave (crossfade) entre as fotos de fundo
-const heroSlides = document.querySelectorAll('.hero-slide');
-if (heroSlides.length > 1) {
-  let heroSlideIndex = 0;
+// Crossfade genérico: alterna a classe "active" entre slides irmãos
+function startCrossfade(slides, interval) {
+  if (slides.length < 2) return;
+  let index = 0;
   setInterval(() => {
-    heroSlides[heroSlideIndex].classList.remove('active');
-    heroSlideIndex = (heroSlideIndex + 1) % heroSlides.length;
-    heroSlides[heroSlideIndex].classList.add('active');
-  }, 5000);
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+  }, interval);
 }
+
+// Hero: transição suave (crossfade) entre as fotos de fundo
+startCrossfade(document.querySelectorAll('.hero-slide'), 5000);
+
+// "O que fazemos": carrossel elegante entre as fotos do ambiente
+startCrossfade(document.querySelectorAll('.about-slide'), 4500);
 
 // Tilt 3D: título do hero e citação da Nossa Visão inclinam acompanhando o mouse
 function attachTilt(el, { max = 10, perspective = 700 } = {}) {
