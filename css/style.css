@@ -516,13 +516,15 @@ em { font-style: italic; }
 
 .projects-grid figcaption {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
   font-size: 0.8rem;
 }
 
 .projects-grid figcaption strong { letter-spacing: 0.08em; }
-.projects-grid figcaption span { color: var(--gray-600); }
+.projects-grid figcaption span { color: var(--gray-600); text-align: right; }
 
 /* ============ Contact ============ */
 .contact { background: var(--cream); padding: 110px var(--pad); }
