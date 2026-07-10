@@ -173,13 +173,14 @@ em { font-style: italic; }
   max-width: var(--container);
   margin: 0 auto;
   width: 100%;
+  text-align: center;
 }
 
 .hero-content h1 {
   font-size: clamp(2rem, 5.4vw, 3.6rem);
   letter-spacing: 0.02em;
   max-width: 15ch;
-  display: inline-block;
+  margin: 0 auto;
   will-change: transform;
 }
 
@@ -321,7 +322,6 @@ em { font-style: italic; }
   max-width: 20ch;
   margin: 24px auto 0;
   line-height: 1.35;
-  display: inline-block;
   will-change: transform;
 }
 
@@ -521,7 +521,7 @@ em { font-style: italic; }
   .main-nav a { color: var(--ink); }
   .main-nav.open { transform: translateX(0); box-shadow: -10px 0 30px rgba(0,0,0,0.15); }
 
-  .nav-toggle { display: flex; }
+  .nav-toggle { display: flex; margin-left: auto; }
   .header-inner > .btn-pill { display: none; }
   .nav-contact-mobile { display: block; }
 

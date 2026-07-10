@@ -37,16 +37,19 @@ function attachTilt(el, { max = 10, perspective = 700 } = {}) {
 attachTilt(document.querySelector('.hero-content h1'), { max: 10, perspective: 700 });
 attachTilt(document.querySelector('.vision-quote'), { max: 8, perspective: 700 });
 
-// Faixa de estatísticas: números contam de 0 até o valor final ao entrar na tela
+// Faixa de estatísticas: números contam de 0 até o valor final ao rolar até a faixa ou passar o mouse
 const statsBand = document.querySelector('.stats-band .vision-stats');
 if (statsBand) {
   const numberEls = statsBand.querySelectorAll('.stat-num');
+  let runToken = 0;
   const animateStats = () => {
+    const myToken = ++runToken;
     numberEls.forEach(el => {
       const target = parseInt(el.dataset.target, 10);
       const duration = 1400;
       const start = performance.now();
       const step = (now) => {
+        if (myToken !== runToken) return;
         const progress = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         el.textContent = Math.round(eased * target);
@@ -58,16 +61,14 @@ if (statsBand) {
   if ('IntersectionObserver' in window) {
     const statsObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateStats();
-          statsObserver.unobserve(entry.target);
-        }
+        if (entry.isIntersecting) animateStats();
       });
     }, { threshold: 0.4 });
     statsObserver.observe(statsBand);
   } else {
     numberEls.forEach(el => { el.textContent = el.dataset.target; });
   }
+  statsBand.addEventListener('mouseenter', animateStats);
 }
 
 // Especialidades: revela os itens em escala, um por um, ao entrar na tela
