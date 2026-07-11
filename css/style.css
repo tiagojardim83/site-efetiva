@@ -16,6 +16,8 @@
 
 html { scroll-behavior: smooth; }
 
+html, body { max-width: 100%; overflow-x: hidden; }
+
 body {
   font-family: var(--mono);
   color: var(--ink);
@@ -242,6 +244,7 @@ em { font-style: italic; }
   font-weight: 700;
   font-size: 1rem;
   letter-spacing: 0.1em;
+  color: var(--ink);
 }
 
 .about-text p {
@@ -400,7 +403,7 @@ em { font-style: italic; }
 }
 
 /* ============ Projects ============ */
-.projects { padding: 110px var(--pad); max-width: var(--container); margin: 0 auto; }
+.projects { background: #fff; padding: 110px var(--pad); max-width: var(--container); margin: 0 auto; overflow-x: hidden; }
 
 .projects-header {
   display: grid;
