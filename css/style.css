@@ -4,8 +4,8 @@
 :root {
   --serif: 'Playfair Display', 'Times New Roman', serif;
   --mono: 'Space Mono', 'Courier New', monospace;
-  --blue: #2f6fe4;
-  --blue-deep: #1f4fb8;
+  --blue: #27aae1;
+  --blue-deep: #1a8bbd;
   --ink: #17181a;
   --gray-600: #5a5d63;
   --gray-300: #c9cbcd;
@@ -349,7 +349,7 @@ em { font-style: italic; }
 .vision {
   text-align: center;
   padding: 100px var(--pad) 90px;
-  background: linear-gradient(180deg, #3672e6 0%, #5f92ef 40%, #b9cdf3 75%, #dde6f7 100%);
+  background: linear-gradient(180deg, #27aae1 0%, #5cc0e8 40%, #b3e2f2 75%, #e6f6fb 100%);
   color: #fff;
 }
 
@@ -665,7 +665,7 @@ em { font-style: italic; }
   .mobile-nav-links {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 0;
     flex: 1;
   }
