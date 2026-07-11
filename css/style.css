@@ -657,18 +657,25 @@ em { font-style: italic; }
 
   .mobile-signo {
     display: block;
-    width: 34px;
+    width: 102px;
     height: auto;
-    margin-bottom: 48px;
+    margin-bottom: 18px;
   }
 
   .mobile-nav-links {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 26px;
+    justify-content: flex-start;
+    gap: 0;
     flex: 1;
   }
+
+  .mobile-nav-links a {
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.14);
+  }
+
+  .mobile-nav-links a:last-child { border-bottom: none; }
 
   .mobile-social {
     display: flex;
